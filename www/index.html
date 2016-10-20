@@ -28,22 +28,70 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Hello World</title>
+        <!-- <link rel="stylesheet" type="text/css" href="css/index.css"> -->
+        <title>FIDO Conformance Test App</title>
     </head>
     <body>
         <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
+<!--             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
-                <p>FIDO Conformance App</p>
-                <p><div id="fido-results"></div></p>
-            </div>
+            </div> -->
+            <p>FIDO Conformance App</p>
+            <button type="submit" style="width:30px" onClick="loadJavascript()">Go</button>
+            <input type="text" autofocus name="url" style="width:calc(100% - 50px)" id="url-input">
+            <div id="dynamic-body"></div>
+            <script type="text/javascript">
+
+                // this function fetches the URL in the <input> box and loads it as JavaScript
+                function loadJavascript() {
+                    console.log ("Loading JavaScript...");
+
+                    // have to clear the cache, or else it won't load a changed JS file from the server
+                    // the code below this needs to be nested to prevent race conditions
+                    console.log ("Clearing Cache...");
+                    window.cache.clear(
+                        function() { // success
+                            console.log ("Successfully cleared cache.");
+                            getUrl();
+                        }, function(err) { // error
+                            console.log ("Error clearing cache:", err);
+                        });
+                }
+
+                // a continuation of loadJavascript()...
+                // this gets called after the cache is cleared
+                function getUrl() {
+                    console.log ("Getting URL...");
+                    // get the value of the URL
+                    var urlInput = document.getElementById ("url-input");
+                    if (urlInput === null) {
+                        console.log ("ERROR: couldn't find url-input");
+                        alert ("INTERNAL ERROR: couldn't find url-input");
+                        return;
+                    }
+                    var url = urlInput.value.trim();
+
+                    // error checking the URL value
+                    if (url === "") {
+                        console.log ("URL was empty");
+                        alert ("Dude. You have to enter a URL. Duh.");
+                        return;
+                    }
+                    console.log ("URL:", url);
+
+                    // load the JavaScript
+                    var jsTag = document.createElement("script");
+                    jsTag.type = "application/javascript";
+                    jsTag.src = url;
+                    document.body.appendChild(jsTag);
+                }
+            </script>
+            <p><div id="fido-results"></div></p>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
