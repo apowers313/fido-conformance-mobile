@@ -35,32 +35,52 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
-        console.log ("now running: cordova exec!");
-        cordova.exec(function(res) {
-                console.log ("got exec result");
-                var fidoDiv = document.getElementById("fido-results");
-                if (fidoDiv) {
-                    console.log ("fido-results found");
-                    fidoDiv.innerHTML = res;
-                } else {
-                    console.log ("!!! fido-results NOT found");
-                }
-            },
-            function(error) {
-                console.log ("error with cordova.exec:", error);
-                throw (new Error (error));
-            },
-            "fido",
-            "uafDiscover", ["testing 1 2 3"]);
+        console.log ("now running: UAF Discover!");
+        // Discover FIDO clients
+        // cordova.plugins.fido.uafDiscover()
+        //     .then(function (ret) {
+        //         console.log ("got discover result");
+
+        //         // show the results in our <div> in the HTML
+        //         var fidoDiv = document.getElementById("fido-results");
+        //         if (fidoDiv) {
+        //             console.log ("fido-results found");
+        //             fidoDiv.innerHTML = ret;
+        //         } else {
+        //             console.log ("!!! fido-results NOT found");
+        //         }
+        //     })
+        //     .catch(function (err) {
+        //         console.log ("error with cordova.exec:", err);
+        //         throw (new Error (err));
+        //     });
+
+        // cordova.plugins.fido.uafOperation(JSON.stringify(regMsg))
+        //     .then(function (ret) {
+        //         console.log ("got discover result");
+
+        //         // show the results in our <div> in the HTML
+        //         var fidoDiv = document.getElementById("fido-results");
+        //         if (fidoDiv) {
+        //             console.log ("fido-results found");
+        //             fidoDiv.innerHTML = ret;
+        //         } else {
+        //             console.log ("!!! fido-results NOT found");
+        //         }
+        //     })
+        //     .catch(function (err) {
+        //         console.log ("error with cordova.exec:", err);
+        //         throw (new Error (err));
+        //     });
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        // var parentElement = document.getElementById(id);
+        // var listeningElement = parentElement.querySelector('.listening');
+        // var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+        // listeningElement.setAttribute('style', 'display:none;');
+        // receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
     }
