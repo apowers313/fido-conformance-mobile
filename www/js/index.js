@@ -34,22 +34,6 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
-
-        console.log ("now running: UAF Discover!");
-
-        var regMsg = [{"header":{"upv":{"major":1,"minor":0},"op":"Reg","appID":"https://api-rp.identityx-cloud.com/martin/facets"},"challenge":"IR9celOoUv1BuEsThdwNVQ","username":"do@it.con","policy":{"accepted":[[{"aaid":["53EC#C002"]}],[{"aaid":["D409#0101"]}],[{"aaid":["D409#0201"]}],[{"aaid":["D409#0501"]}],[{"aaid":["D409#0301"]}],[{"aaid":["D409#0601"]}],[{"aaid":["D409#0701"]}],[{"aaid":["D409#0801"]}]]}}];
-        var channelBindings = {"serverEndPoint":null,"tlsServerCertificate":null,"tlsUnique":null,"cid_pubkey":null};
-        fido.uafOperation(
-                regMsg, 
-                channelBindings
-            )
-            .then(function(ret) {
-                console.log (ret);
-            })
-            .catch(function(err) {
-                console.log (err);
-            });
-
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
